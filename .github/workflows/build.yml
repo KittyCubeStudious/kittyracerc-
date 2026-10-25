@@ -12,13 +12,14 @@ jobs:
             - name: Install Dependencies & Compile
               run: |
                   sudo apt update
-                  sudo apt install -y build-essential git wget make
+                  # SDL2 kütüphanesini ve derleme araçlarını eksiksiz kuruyoruz
+                  sudo apt install -y build-essential git wget make libsdl2-dev
                   
-                  # Repo içindeki dosyaları listeleyelim ki nerede olduğunu görelim
+                  # Dosyaların yerinde olduğunu kontrol edip derlemeyi başlatıyoruz
                   ls -la
                   
-                  # C++ derlemesini çalıştıralım (Eğer dosya adı main.cpp ise)
-                  g++ -O3 main.cpp -o eboot.elf
+                  # SDL2 bayraklarıyla birlikte C++ derlemesi
+                  g++ -O3 main.cpp -o eboot.elf $(sdl2-config --cflags --libs)
 
             - name: Upload EBOOT Artifact
               uses: actions/upload-artifact@v4
