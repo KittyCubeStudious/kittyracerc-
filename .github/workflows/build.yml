@@ -12,14 +12,13 @@ jobs:
             - name: Install Dependencies & Compile
               run: |
                   sudo apt update
-                  # SDL2 kütüphanesini ve derleme araçlarını eksiksiz kuruyoruz
-                  sudo apt install -y build-essential git wget make libsdl2-dev
+                  # SDL2 ile birlikte yazı tipi (ttf) kütüphanesini de kuruyoruz
+                  sudo apt install -y build-essential git wget make libsdl2-dev libsdl2-ttf-dev
                   
-                  # Dosyaların yerinde olduğunu kontrol edip derlemeyi başlatıyoruz
                   ls -la
                   
-                  # SDL2 bayraklarıyla birlikte C++ derlemesi
-                  g++ -O3 main.cpp -o eboot.elf $(sdl2-config --cflags --libs)
+                  # SDL2 ve TTF kütüphane bayraklarıyla derleme
+                  g++ -O3 main.cpp -o eboot.elf $(sdl2-config --cflags --libs) -lSDL2_ttf
 
             - name: Upload EBOOT Artifact
               uses: actions/upload-artifact@v4
