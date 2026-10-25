@@ -14,9 +14,11 @@ jobs:
                   sudo apt update
                   sudo apt install -y build-essential git wget make
                   
-                  # Basit bir derleme testi ve EBOOT.ELF üretimi
-                  # main.cpp içindeki kodları PPU (PS3) için derleme komutu
-                  g++ -O3 main.cpp -o eboot.elf || echo "Derleme tamamlandı"
+                  # Repo içindeki dosyaları listeleyelim ki nerede olduğunu görelim
+                  ls -la
+                  
+                  # C++ derlemesini çalıştıralım (Eğer dosya adı main.cpp ise)
+                  g++ -O3 main.cpp -o eboot.elf
 
             - name: Upload EBOOT Artifact
               uses: actions/upload-artifact@v4
