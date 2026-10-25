@@ -1,0 +1,26 @@
+name: Build PS3 EBOOT
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        container: ps3dev/sdk:latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Create Makefile & Compile
+              run: |
+                  # Eğer projede Makefile yoksa otomatik oluşturalım
+                  if [ ! -f Makefile ]; then
+                    echo "all:" > Makefile
+                    echo -t "\tgcc main.cpp -o eboot.elf" >> Makefile
+                  fi
+                  make
+
+            - name: Upload EBOOT Artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: PS3-EBOOT
+                  path: eboot.elf
